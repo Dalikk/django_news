@@ -1,0 +1,30 @@
+from news.models import News
+
+News.objects.all()
+Метод all() возвращает все записи в бд
+
+//Добавление записи в бд чере shell
+News.objects.create(title='News 5', content='News 6 content')
+
+//Метод возвращающий строковое представление объекта
+def __str__(self):
+	return self.title //возвращаем аргумент title
+
+//Выборка
+...objects.filter(title='News 5')
+...objects.get(pk=5) //select по primary key, получать по уникальному полю
+
+//Изменение 
+news4 = News.objects.get(pk=4)
+news4.title = 'Новооость 4'
+news4.save()
+
+//Удаление
+News.objects.get(pk=7).delete()
+
+//Сортировка
+News.objects.order_by('title')
+News.objects.order_by('-title') //обратный порядок
+
+//Exclude
+News.objects.exclude(title='News 5') //выведет все записи кроме title='News 5'
