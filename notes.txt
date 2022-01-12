@@ -28,3 +28,13 @@ News.objects.order_by('-title') //обратный порядок
 
 //Exclude
 News.objects.exclude(title='News 5') //выведет все записи кроме title='News 5'
+
+//Админка
+python manage.py createsuperuser //создание супера
+
+//
+Field.db_index
+Если True, для этого поля будет создан индекс базы данных.
+
+ def __str__(self):		  // строковое представление объекта
+        return self.title //
