@@ -1,0 +1,7 @@
+<div class="list-group">
+    <h6 class="text-center">{{ arg1 }} {{ arg2 }}</h6>
+    {% for item in categories %}
+        <a href="{% url 'category' item.pk %}"
+           class="list-group-item list-group-item-action">{{ item.title }}</a>
+    {% endfor %}
+</div>

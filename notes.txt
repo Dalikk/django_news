@@ -38,3 +38,5 @@ Field.db_index
 
  def __str__(self):		  // строковое представление объекта
         return self.title //
+
+Декораторы
