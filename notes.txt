@@ -52,3 +52,27 @@ slug - строка, которая может быть использована
 //Подключение MySQL
 Для подключения надо установить драйвер - пакет mysqlclient
 После подключения необходимо выполнить миграцию (migrate)
+
+//Django ORM.
+Документация: https://django.fun/docs/django/ru/3.1/ref/models/querysets/
+Примеры:
+Выполняем команды через shell (запускается "python manage.py shell")
+Импортируем модели
+>>> from news.model import News, Category
+>>> News.objects.all() - получаем все записи
+>>> News.objects.order_by('pk') - получаем записи сортированные по первичному ключу
+>>> News.objects.get(title='News 5')
+<News: News 5>
+>>> news5 = _
+>>> news5.is_published - теперь можем обратиться к любому атрибуту модели по переменной news5
+True
+>>> news5.category - вернет объект Category, т.к. это связанное поле
+<Category: Наука>
+>>> Category.objects.get(pk=2)
+>>> cat2 = _
+>>> cat2.news_set.all() - получаем все объекты связанной модели news которые ссылаются на cat4
+<QuerySet [<News: Новость из формы 9>, <News: Новость из формы 8>, <News: Новость из формы 7>, <News: Новость из формы 2>, <News: Новость из формы>, <News: Новость 3>]>
+- атрибут _set можно переназначить указав в модели его наименование в атрибуте related_name, например:
+    category = models.ForeignKey("Category", on_delete=models.PROTECT, verbose_name="Категория", related_name='get_news')
+>>> cat2.get_news.all() - теперь можно писать так
+<QuerySet [<News: Новость из формы 9>, <News: Новость из формы 8>, <News: Новость из формы 7>, <News: Новость из формы 2>, <News: Новость из формы>, <News: Новость 3>]>
