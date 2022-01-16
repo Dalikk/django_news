@@ -117,3 +117,14 @@ False
 >>> news.get_next_by_created_at(pk__gt=10, title__contains=7)
 <News: Новость из формы 7>
 
+
+Фильтрация по значениям полей, связанных записей
+<имя поля внешнего ключа>__<имя поля первичной модели>
+>>> News.objects.filter(category__title='Политика') - получаем News, где category.title = 'Политика'
+//наоборот
+>>> Category.objects.filter(news__title__contains='формы') - все записи, где в title новости содержится 'формы'
+
+Класс Q
+>>> from django.db.models import Q - можем использовать специальные операторы | & ~
+>>> News.objects.filter(Q(pk__in=[5, 6]) | Q(title__contains='2')) - условие или
+>>> News.objects.filter(Q(pk__in=[5, 6]) | Q(title__contains='2') & ~Q(pk__lt=4)) условие с использованием 'не'
