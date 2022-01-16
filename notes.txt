@@ -76,3 +76,44 @@ True
     category = models.ForeignKey("Category", on_delete=models.PROTECT, verbose_name="Категория", related_name='get_news')
 >>> cat2.get_news.all() - теперь можно писать так
 <QuerySet [<News: Новость из формы 9>, <News: Новость из формы 8>, <News: Новость из формы 7>, <News: Новость из формы 2>, <News: Новость из формы>, <News: Новость 3>]>
+
+ФИЛЬТРЫ ПОЛЕЙ
+https://django.fun/docs/django/ru/3.1/ref/models/querysets/#field-lookups
+Синтаксис фильтра полей <имя поля>__<фильтр>
+Примеры:
+>>> News.objects.filter(pk__gt=12) - вернет QuerySet из объектов, у которых pk > 12
+
+МЕТОДЫ, КОТОРЫЕ НЕ ВОЗВРАЩАЮТ QuerySet
+Примеры:
+>>> News.objects.first()
+<News: Новость из формы 9>
+>>> News.objects.order_by('pk').first() - возравщает первую
+<News: Новость 1>
+>>> cat1.news_set.filter(pk__gt=1).first() - можно применять с другими методами
+<News: Новость из админки>
+
+В filter в качестве аргумента можно передавать QuerySet, например:
+>>> cats = Category.objects.filter(pk__in=[1, 3])
+>>> cats
+<QuerySet [<Category: Культура>, <Category: Политика>]>
+>>> News.objects.filter(category__in=cats) - выведет все записи с категориями 'cats'
+<QuerySet [<News: Новость из формы 6>, <News: Новость из формы 5>, <News: Новость из формы 4>, <News: Новость из формы 3>, <News: Новость из админки>, <News: Новость 4>, <News: Новость
+ 2>, <News: Новость 1>]>
+
+Проверяем есть ли записи с такими категориями
+>>> cat1 = Category.objects.get(pk=1)
+>>> cat5 = Category.objects.get(pk=5)
+>>> cat1.news_set.exists()
+True
+>>> cat5.news_set.exists()
+False
+
+Получить предыдущую запись (записывается get_previous_by_<имя поля>)
+>>> news = News.objects.get(pk=5)
+>>> news.get_previous_by_created_at() - по 'created_at'
+<News: Новость 4>
+
+Также можно комбинировать с фильтрами
+>>> news.get_next_by_created_at(pk__gt=10, title__contains=7)
+<News: Новость из формы 7>
+
