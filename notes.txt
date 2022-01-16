@@ -128,3 +128,38 @@ False
 >>> from django.db.models import Q - можем использовать специальные операторы | & ~
 >>> News.objects.filter(Q(pk__in=[5, 6]) | Q(title__contains='2')) - условие или
 >>> News.objects.filter(Q(pk__in=[5, 6]) | Q(title__contains='2') & ~Q(pk__lt=4)) условие с использованием 'не'
+
+Срезы
+>>> News.objects.all()[:3] - получаем первые 3 записи
+>>> News.objects.all()[10:] - все записи начиная с 10-й
+>>> News.objects.all()[3:5] - после 3-й до 5-й
+
+Агрегатные функции
+>>> from django.db.models import *
+>>> News.objects.aggregate(Min('views'), Max('views')) - минимальное и максимальное значение views
+{'views__min': 0, 'views__max': 1000}
+>>> News.objects.aggregate(min_views=Min('views'), max_views=Max('views')) - можно использовать именованные аргументы (давать собственные имена для выходного словаря)
+{'min_views': 0, 'max_views': 1000}
+
+Annotate - по группам
+>>> cats = Category.objects.annotate(Count('news'))     - вычисляем количество записей по группам
+<Category: Культура>
+>>> for item in cats:                                   - выводим
+...     print(item.title, item.news__count)             - такая запись <название модели>__<название агрегатного метода>
+...                                                       если используем позиционный аргумент, а не именованный
+Культура 3
+Наука 1
+Политика 5
+Спорт 6
+Тест 0
+>>> cats = Category.objects.annotate(cnt=Count('news'))
+>>> for item in cats:                                   - запись
+...     print(item.title, item.cnt)                     - запись, если используется именованный аргумент
+...
+>>> cats = Category.objects.annotate(max_views=Max('news__views'))  - для каждой рубрики максимальное количество просмотров
+>>> for item in cats:
+...     print(item.title, item.max_views)
+>>> cats = Category.objects.annotate(sum_views=Sum('news__views')) - сумма просмотров по категориям
+>>> cats = Category.objects.annotate(cnt=Count('news')).filter(cnt__gt=0) - поля по количествам записей и >0
+- cnt это поле сформированное annotate, поэтому можем использовать в filter как поле
+>>> News.objects.aggregate(cnt=Count('views', distinct=True)) - считает только уникальные значения
