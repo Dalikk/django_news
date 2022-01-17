@@ -178,3 +178,9 @@ https://django.fun/docs/django/ru/3.1/ref/models/database-functions/
 >>> from django.db.models.functions import Length - функция вычисляющая длину строки
 >>> news = News.objects.annotate(length=Length('title')).all()
 
+Чистый SQL
+>>> News.objects.raw("SELECT * FROM news_news")
+<RawQuerySet: SELECT * FROM news_news>
+>>> News.objects.raw("SELECT id, title FROM news_news") - при выборе по полям id писать обязательно
+при передаче параметров, следует использовать params
+
