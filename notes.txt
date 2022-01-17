@@ -163,3 +163,18 @@ Annotate - по группам
 >>> cats = Category.objects.annotate(cnt=Count('news')).filter(cnt__gt=0) - поля по количествам записей и >0
 - cnt это поле сформированное annotate, поэтому можем использовать в filter как поле
 >>> News.objects.aggregate(cnt=Count('views', distinct=True)) - считает только уникальные значения
+
+Метод values - позволяет указать нужные для получения поля и возрващает словари с указанными полями
+>>> News.objects.values('title', 'views').get(pk=1) - поля 'title' и 'views' из первой новости
+{'title': 'Новость 1', 'views': 99}
+
+КЛАСС F
+news = News.objects.get(pk=1)
+>>> news.views = F('views') + 1 - добавляет к 'view' 1
+>>> news.save()
+
+Функции SQL
+https://django.fun/docs/django/ru/3.1/ref/models/database-functions/
+>>> from django.db.models.functions import Length - функция вычисляющая длину строки
+>>> news = News.objects.annotate(length=Length('title')).all()
+
