@@ -184,3 +184,6 @@ https://django.fun/docs/django/ru/3.1/ref/models/database-functions/
 >>> News.objects.raw("SELECT id, title FROM news_news") - при выборе по полям id писать обязательно
 при передаче параметров, следует использовать params
 
+//Django Debug Toolbar
+Устанваливаем пакет django-debug-toolbar
+
