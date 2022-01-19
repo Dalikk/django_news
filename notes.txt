@@ -197,3 +197,9 @@ https://django.fun/docs/django/ru/3.1/topics/auth/default/#authentication-in-web
 
 Миксин LoginRequired
 https://django.fun/docs/django/ru/3.1/topics/auth/default/#authentication-in-web-requests
+
+
+
+//ПАГИНАЦИЯ
+https://django.fun/docs/django/ru/3.1/topics/pagination/
+
