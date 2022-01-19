@@ -187,3 +187,7 @@ https://django.fun/docs/django/ru/3.1/ref/models/database-functions/
 //Django Debug Toolbar
 Устанваливаем пакет django-debug-toolbar
 
+
+//МИКСИНЫ(примеси)
+При наследовании классов, более значимый класс надо прописывать первым
+Миксины как правило принято создавать в файле, который называется utils.py, в папке приложения
