@@ -208,3 +208,5 @@ https://django.fun/docs/django/ru/3.1/topics/pagination/
 https://docs.djangoproject.com/en/4.0/topics/auth/customizing/
 https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
 
+//АВТОРИЗАЦИЯ
+https://djbook.ru/rel3.0/topics/auth/default.html
