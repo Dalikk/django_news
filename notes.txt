@@ -210,3 +210,8 @@ https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
 
 //АВТОРИЗАЦИЯ
 https://djbook.ru/rel3.0/topics/auth/default.html
+
+
+//CKEditor
+устанавливаем пакет django-ckeditor
+https://pypi.org/project/django-ckeditor/#installation
